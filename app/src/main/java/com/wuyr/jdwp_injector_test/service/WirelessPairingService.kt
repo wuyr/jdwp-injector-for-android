@@ -41,7 +41,6 @@ class WirelessPairingService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Intent.ACTION_ACTIVITY_RECOGNIZER
         createNotificationChannel()
     }
 
