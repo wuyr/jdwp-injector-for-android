@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp"
+    app:cardCornerRadius="4dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/iconView"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:adjustViewBounds="true"
+            android:padding="4dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/nameView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:paddingHorizontal="4dp"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/packageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconView"
+            app:layout_constraintTop_toTopOf="@+id/iconView"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="com.wuyr.jdwp_injecto" />
+
+        <TextView
+            android:id="@+id/packageView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            android:paddingHorizontal="4dp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@+id/iconView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iconView"
+            app:layout_constraintTop_toBottomOf="@+id/nameView"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="com.wuyr.jdwp_i.wuyr.jdwp_injectorjedcto" />
+
+        <Button
+            android:id="@+id/openButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/open"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/showDialogButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iconView" />
+
+        <Button
+            android:id="@+id/showDialogButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/show_dialog"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toStartOf="@+id/showToastButton"
+            app:layout_constraintStart_toEndOf="@+id/openButton"
+            app:layout_constraintTop_toTopOf="@+id/openButton" />
+
+        <Button
+            android:id="@+id/showToastButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/show_toast"
+            android:textSize="12sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/showDialogButton"
+            app:layout_constraintTop_toTopOf="@+id/showDialogButton" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

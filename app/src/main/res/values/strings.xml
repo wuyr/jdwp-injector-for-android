@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">jdwp-injector-for-android</string>
+    <string name="you_have_denied_notification_permission">You have denied notification permission</string>
+    <string name="please_grant_notification_permission">Please grant notification permission</string>
+    <string name="wireless_debugging_not_available_have_you_opened_it">Wireless debugging not available, have you opened it?</string>
+    <string name="development_settings_has_been_disabled_please_reopen_it">Development settings has been disabled, please reopen it</string>
+    <string name="wireless_debugging_not_available">Wireless debugging not available</string>
+    <string name="wireless_debugging_unpaired_now_starting_pairing_service">Wireless debugging unpaired, now starting pairing service</string>
+    <string name="wireless_debugging_not_available_now_please_connect_a_wifi_and_reopen_it">Wireless debugging not available now, please connect a wifi and reopen it</string>
+    <string name="wireless_debugging_pairing_timeout_please_restart_the_pairing_service">Wireless debugging pairing timeout, please restart the pairing service</string>
+    <string name="wireless_debugging_not_connected">Wireless debugging not connected</string>
+    <string name="wireless_debugging_has_been_closed_please_reopen_it">wireless debugging has been closed, please reopen it</string>
+    <string name="communication_failed_please_retry">communication failed, please retry</string>
+    <string name="wireless_debugging_unpaired">Wireless debugging unpaired</string>
+    <string name="please_connect_a_wifi_and_reopen_wireless_debugging">please connect a wifi and reopen Wireless debugging</string>
+    <string name="the_pairing_code_has_been_closed_please_reopen_it">the pairing code has been closed, please reopen it</string>
+    <string name="entered_an_incorrect_pairing_code">entered an incorrect pairing code</string>
+    <string name="connection_service_started">Connection service started</string>
+    <string name="please_open_the_wireless_debugging">please reopen the Wireless debugging</string>
+    <string name="pairing_service_started">Pairing service started</string>
+    <string name="please_show_the_pairing_code">please show the pairing code</string>
+    <string name="pairing_code_found">Pairing code found</string>
+    <string name="please_enter_it_in_the_notification">please enter it in the notification</string>
+    <string name="wireless_debugging_connect_successful">Wireless debugging connect successful</string>
+    <string name="wireless_debugging_pairing_successful">Wireless debugging pairing successful</string>
+    <string name="load_debuggable_app_list">load debuggable app list</string>
+    <string name="open">open</string>
+    <string name="show_dialog">show dialog</string>
+    <string name="show_toast">show toast</string>
+    <string name="stop">STOP</string>
+    <string name="enter_pairing_code">ENTER PAIRING CODE</string>
+    <string name="paring_code">paring code</string>
+    <string name="target_process_not_found_please_open_it_first">Target process not found, please open it first</string>
+    <string name="unknown_error">Unknown error</string>
+    <string name="time_out_to_connect_to_target_process">Time out to connect to target process, please disconnect other adb connections(such as Android Studio) and try again</string>
+    <string name="adb_communication_failure">Adb communication failure, please disconnect other adb connections(such as Android Studio) and try again</string>
+</resources>

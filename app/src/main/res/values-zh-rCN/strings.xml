@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">jdwp-injector-for-android</string>
+    <string name="you_have_denied_notification_permission">你拒绝了通知权限</string>
+    <string name="please_grant_notification_permission">请授予通知权限</string>
+    <string name="wireless_debugging_not_available_have_you_opened_it">无线调试未开启，请检查设置</string>
+    <string name="development_settings_has_been_disabled_please_reopen_it">开发者选项已关闭，请重新打开</string>
+    <string name="wireless_debugging_not_available">无线调试未开启</string>
+    <string name="wireless_debugging_unpaired_now_starting_pairing_service">现在进行无线调试配对</string>
+    <string name="wireless_debugging_not_available_now_please_connect_a_wifi_and_reopen_it">无线调试不可用，请先连接wifi然后重新打开无线调试功能</string>
+    <string name="wireless_debugging_pairing_timeout_please_restart_the_pairing_service">无线配对超时未完成，请返回app重新操作</string>
+    <string name="wireless_debugging_not_connected">无线调试连接失败</string>
+    <string name="wireless_debugging_has_been_closed_please_reopen_it">无线调试功能已关闭，请重新打开</string>
+    <string name="communication_failed_please_retry">通讯失败，请重试</string>
+    <string name="wireless_debugging_unpaired">无线调试配对失败</string>
+    <string name="please_connect_a_wifi_and_reopen_wireless_debugging">请连接wifi然后重新打开无线调试功能</string>
+    <string name="the_pairing_code_has_been_closed_please_reopen_it">配对码已关闭，请重新打开</string>
+    <string name="entered_an_incorrect_pairing_code">配对码输入错误</string>
+    <string name="connection_service_started">正在等待无线连接</string>
+    <string name="please_open_the_wireless_debugging">请重新打开无线调试功能</string>
+    <string name="pairing_service_started">正在等待无线配对</string>
+    <string name="please_show_the_pairing_code">请打开配对码</string>
+    <string name="pairing_code_found">配对码已找到</string>
+    <string name="please_enter_it_in_the_notification">请在通知中输入</string>
+    <string name="wireless_debugging_connect_successful">无线调试连接成功</string>
+    <string name="wireless_debugging_pairing_successful">无线调试配对成功</string>
+    <string name="load_debuggable_app_list">加载可调试app列表</string>
+    <string name="open">打开</string>
+    <string name="show_dialog">显示一个dialog</string>
+    <string name="show_toast">显示一个toast</string>
+    <string name="stop">停止</string>
+    <string name="enter_pairing_code">输入配对码</string>
+    <string name="paring_code">配对码</string>
+    <string name="target_process_not_found_please_open_it_first">目标进程未找到，请先运行</string>
+    <string name="unknown_error">未知错误</string>
+    <string name="time_out_to_connect_to_target_process">连接目标进程超时，请断开其他adb链接(如android studio) 后重试</string>
+    <string name="adb_communication_failure">adb通讯失败，请断开其他adb链接(如android studio) 后重试</string>
+</resources>
