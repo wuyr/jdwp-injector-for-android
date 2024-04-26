@@ -1,8 +1,3 @@
-### 声明：
-**此工具仅供学习研究，请勿用于非法用途！**
-
-<br/>
-
 ### 简介：
 借助Android 11以上自带的无线adb，给普通手机(无root)提供一个对debuggable app进行动态代码注入的能力，无需依赖额外工具。
 
@@ -31,15 +26,19 @@ fun showDialog() {
 }
 ```
 
+
 >完整代码请移步: [Drug.kt](https://github.com/wuyr/jdwp-injector-for-android/blob/master/app/src/main/java/com/wuyr/jdwp_injector_test/Drug.kt)
 
+
 运行效果：
+
 
 ![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/1.gif)
 
 ![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/2.gif)
 
 ![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/3.gif)
+
 
 >注：如果要注入release版的app，必须开启全局调试(`ro.debuggable=1`)或者当前系统类型是userdebug或eng(`ro.build.type=userdebug|eng`)才可以。
 
@@ -100,6 +99,7 @@ fun showDialog() {
 当jdwp的agent成功启动之后，【被调试进程】会把`adb_connection_socket_`(刚刚从`control_socket`收到的fd) 发送给agent([adbconnection.cc#570](https://aosp.app/android-11.0.0_r1/xref/art/adbconnection/adbconnection.cc#570))，那么接下来，就由agent全权负责跟【debugger】的通讯了，也就是debug正式开始([debugInit.c#1493](https://aosp.app/android-11.0.0_r1/xref/external/oj-libjdwp/src/share/back/debugInit.c#1493))。
 
 **通俗地概括一下：**
+
 在整个流程中，总共有3个角色，分别是：
 调试器【debugger】(相亲对象A)、【手机里的adbd系统服务】(媒婆)、【手机里被调试的app】(相亲对象B)。
 
@@ -108,6 +108,11 @@ fun showDialog() {
 2. 当需要debug的时候(相亲对象A想找对象，媒婆来活了)，【debugger】通过一些介质(usb, wifi)和【adbd系统服务】建立连接(相亲对象A加上媒婆的微信)后，【adbd系统服务】会把这个连接的文件描述符转发给【手机里被调试的app】(媒婆把相亲对象A的微信名片分享给相亲对象B)；
 
 3. 【手机里被调试的app】收到这个文件描述符之后，直接跟【debugger】通讯(相亲对象B收到名片之后，加上了相亲对象A的微信，然后他们就直接通过微信联系的，收发消息不需要经过媒婆了)。
+
+<br/>
+
+### 声明：
+**此工具仅供学习研究，请勿用于非法用途！**
 
 <br/>
 
