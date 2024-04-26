@@ -26,7 +26,6 @@ fun showDialog() {
 }
 ```
 
-
 >完整代码请移步: [Drug.kt](https://github.com/wuyr/jdwp-injector-for-android/blob/master/app/src/main/java/com/wuyr/jdwp_injector_test/Drug.kt)
 
 
@@ -34,9 +33,7 @@ fun showDialog() {
 
 
 ![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/1.gif)
-
 ![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/2.gif)
-
 ![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/3.gif)
 
 
