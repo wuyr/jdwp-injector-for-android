@@ -31,7 +31,7 @@ fun showDialog() {
 
 <br/>
 
-**运行效果：**
+**运行效果：(需要科学上网)**
 
 ![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/1.gif)
 ![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/2.gif)
