@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:allowBackup="true"
@@ -19,18 +17,14 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:exported="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:exported="true"
             android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <service
-            android:name=".service.WirelessPairingService"
-            android:foregroundServiceType="shortService" />
     </application>
 
     <queries>

@@ -17,9 +17,11 @@ class AdbWirelessPortResolver private constructor(private val onLost: () -> Unit
 
     companion object {
 
-        fun Context.resolveAdbConnectPort(onLost: () -> Unit, onResolved: (String, Int) -> Unit) = resolveAdbPort("_adb-tls-connect._tcp", onLost, onResolved)
+        fun Context.resolveAdbWirelessConnectPort(onLost: () -> Unit = {}, onResolved: (String, Int) -> Unit) = resolveAdbPort("_adb-tls-connect._tcp", onLost, onResolved)
 
-        fun Context.resolveAdbPairingPort(onLost: () -> Unit, onResolved: (String, Int) -> Unit) = resolveAdbPort("_adb-tls-pairing._tcp", onLost, onResolved)
+        fun Context.resolveAdbTcpConnectPort(onLost: () -> Unit = {}, onResolved: (String, Int) -> Unit) = resolveAdbPort("_adb._tcp", onLost, onResolved)
+
+        fun Context.resolveAdbPairingPort(onLost: () -> Unit = {}, onResolved: (String, Int) -> Unit) = resolveAdbPort("_adb-tls-pairing._tcp", onLost, onResolved)
 
         private fun Context.resolveAdbPort(serviceType: String, onLost: () -> Unit, onResolved: (String, Int) -> Unit) = AdbWirelessPortResolver(onLost, onResolved).apply {
             nsdManager = getSystemService(NsdManager::class.java).also {

@@ -1,10 +1,8 @@
 package com.wuyr.jdwp_injector_test.activity
 
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.viewbinding.ViewBinding
 
 /**
@@ -27,21 +25,4 @@ abstract class BaseActivity<VIEW_BINDING : ViewBinding> : AppCompatActivity() {
     }
 
     abstract fun onCreate()
-
-    private var requestPermissionCallback: ((successful: Boolean) -> Unit)? = null
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        requestPermissionCallback?.invoke(permissions.size == grantResults.size && grantResults.none { it == PackageManager.PERMISSION_DENIED })
-        requestPermissionCallback = null
-    }
-
-    open fun verifyPermissions(callback: (successful: Boolean) -> Unit, vararg permissions: String) {
-        if (permissions.none { ActivityCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_DENIED }) {
-            callback(true)
-        } else {
-            requestPermissionCallback = callback
-            ActivityCompat.requestPermissions(this, permissions, 0)
-        }
-    }
 }

@@ -11,7 +11,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/load_debuggable_app_list" />
+        android:text="@string/load_debuggable_app_list"
+        tools:visibility="gone" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/wirelessPairingRoot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="4dp"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <TextView
+            android:id="@+id/connectHintView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="6dp"
+            android:textSize="18sp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/please_show_the_pairing_code" />
+
+        <EditText
+            android:id="@+id/pairingCodeView"
+            android:layout_width="128dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/paring_code"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingHorizontal="12dp"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/performPairingButton"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@+id/performPairingButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/connectHintView"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/performPairingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pairing"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pairingCodeView"
+            app:layout_constraintTop_toTopOf="@+id/pairingCodeView"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/appList"
