@@ -9,7 +9,7 @@
 
 ### 效果预览：
 
-将要注入的代码：
+**将要注入的代码：**
 
 ```kotlin
 fun showDialog() {
@@ -17,7 +17,8 @@ fun showDialog() {
         Handler(Looper.getMainLooper()).post {
             runningActivities.forEach {
                 if (!it.isDestroyed) {
-                    AlertDialog.Builder(it).setMessage("Hello Debugger from $application").setPositiveButton("close", null).show()
+                    AlertDialog.Builder(it).setMessage("Hello Debugger from $application")
+                        .setPositiveButton("close", null).show()
                 }
             }
             Toast.makeText(application, "dialog has been showed", Toast.LENGTH_LONG).show()
@@ -28,9 +29,9 @@ fun showDialog() {
 
 >完整代码请移步: [Drug.kt](https://github.com/wuyr/jdwp-injector-for-android/blob/master/app/src/main/java/com/wuyr/jdwp_injector_test/Drug.kt)
 
+<br/>
 
-运行效果：
-
+**运行效果：**
 
 ![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/1.gif)
 ![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/2.gif)
