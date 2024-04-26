@@ -2,7 +2,6 @@ package com.wuyr.jdwp_injector.adb
 
 import android.net.ssl.SSLSockets
 import android.os.Build
-import com.android.org.conscrypt.Conscrypt
 import com.wuyr.jdwp_injector.adb.AdbClient.Companion.createSSLSocket
 import com.wuyr.jdwp_injector.exception.PairingException
 import com.wuyr.jdwp_injector.utils.HiddenApiExemptions
@@ -49,7 +48,8 @@ class AdbWirelessPairing(private val host: String, private val port: Int, privat
             SSLSockets.exportKeyingMaterial(socket, "adb-label\u0000", null, 64)
         } else {
             HiddenApiExemptions.doExemptions()
-            Conscrypt.exportKeyingMaterial(socket, "adb-label\u0000", null, 64)
+            Class.forName("com.android.org.conscrypt.Conscrypt").getMethod("exportKeyingMaterial", SSLSocket::class.java, String::class.java, ByteArray::class.java, Int::class.java)
+                .invoke(null, socket, "adb-label\u0000", null, 64) as? ByteArray
         }
         if (keyingMaterial == null) {
             throw PairingException("Unable to export keying material")

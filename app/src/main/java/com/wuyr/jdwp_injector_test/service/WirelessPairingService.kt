@@ -16,6 +16,7 @@ import com.wuyr.jdwp_injector.adb.AdbWirelessPortResolver
 import com.wuyr.jdwp_injector.adb.AdbWirelessPortResolver.Companion.resolveAdbConnectPort
 import com.wuyr.jdwp_injector.adb.AdbWirelessPortResolver.Companion.resolveAdbPairingPort
 import com.wuyr.jdwp_injector_test.R
+import com.wuyr.jdwp_injector_test.log.logE
 import javax.net.ssl.SSLHandshakeException
 import kotlin.concurrent.thread
 
@@ -136,6 +137,7 @@ class WirelessPairingService : Service() {
                 stopForeground(STOP_FOREGROUND_REMOVE)
                 stopSelf()
             }.onFailure {
+                it.stackTraceToString().logE()
                 notifyFailed(R.string.wireless_debugging_unpaired, R.string.entered_an_incorrect_pairing_code)
                 processing = false
             }
