@@ -1,5 +1,6 @@
 package com.wuyr.jdwp_injector_test.activity
 
+import android.app.AlertDialog
 import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.ApplicationInfo
@@ -100,8 +101,11 @@ class MainActivity(override val viewBindingClass: Class<ActivityMainBinding> = A
         handle.removeCallbacks(resolveTimeoutTask)
         handle.removeCallbacks(connectFailedTask)
         runCatching {
-            if (AdbClient.openShell(host, port).use { it.sendShellCommand("getprop ro.debuggable") }.also { response ->
-                    globalDebuggable = response.split("\r\n").filterNot { it.isEmpty() }.run { if (size > 1) this[1] else "" } == "1"
+            if (AdbClient.openShell(host, port).use {
+                    it.sendShellCommand(if (Build.VERSION.SDK_INT >= 34) "persist.debug.dalvik.vm.jdwp.enabled" else "getprop ro.debuggable")
+                }.also { response ->
+                    val enabled = response.split("\r\n").filterNot { it.isEmpty() }.run { if (size > 1) this[1] else "" } == "1"
+                    globalDebuggable = if (Build.VERSION.SDK_INT >= 34) Build.TYPE == "eng" || (Build.TYPE == "userdebug" && enabled) else enabled
                 }.isNotEmpty()) {
                 connected = true
                 handle.removeCallbacks(connectFailedTask)
@@ -256,7 +260,7 @@ class MainActivity(override val viewBindingClass: Class<ActivityMainBinding> = A
                     }
                 )
                 runOnUiThread {
-                    Toast.makeText(this@MainActivity, message, Toast.LENGTH_LONG).show()
+                    AlertDialog.Builder(this).setMessage(message).setPositiveButton(android.R.string.ok, null).show()
                 }
             }
         }

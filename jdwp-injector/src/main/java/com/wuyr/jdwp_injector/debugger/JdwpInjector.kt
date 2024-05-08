@@ -67,8 +67,6 @@ object JdwpInjector {
                     debugger.resumeVM()
                     // 退出debug
                     debugger.dispose()
-                    // 删除dex或apk文件
-                    adb.sendShellCommand("rm ${destFile.absolutePath}")
                 }
             }
         }
