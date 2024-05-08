@@ -53,6 +53,22 @@ fun showDialog() {
 
 <br/>
 
+### Demo使用方法 (请科学上网以查看图片)：
+首次运行app，请先按照指引，进行无线配对:
+
+![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/4.png)
+
+配对完成，加载出app列表之后，可以对列表里的app进行代码注入——你可以尝试在目标app里显示一个dialog，或者显示一个toast。
+通常情况下，如果你的手机没有开启全局调试，它只能对debug包进行注入，如果你想要注入release版app，可以点击页面上方的 "设为全局可调试" 按钮开启全局调试(有安装magisk的设备才会显示此按钮)：
+
+![preview](https://github.com/wuyr/jdwp-injector-for-android/raw/main/previews/5.png)
+
+等待自动重启之后，重新打开app，你会发现，release版app也能够注入了。
+
+当然，这只是一个功能演示，你完全可以clone之后按照你的想法去改造成你想要的样子。
+
+<br/>
+
 ### 诞生背景：
 去年年中因一次偶然的机会发现了某款国产车的车机系统存在一个惊天大漏洞(不知道是不是厂商故意开放出来钓鱼的)：它居然将一个sharedUserId为`android.uid.system`的系统常驻进程(`android:persistent="true"`)的`android:debuggable`属性设置为`"true"`了！！！
 妈呀，这是什么概念？！ 这就意味着，可以借助debug来间接获取到`android.uid.system`(也就是俗称的系统级)权限，轻松实现很多普通app无法实现的功能！

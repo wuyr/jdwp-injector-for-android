@@ -62,13 +62,32 @@
             tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/appList"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/appListRoot"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbarSize="4dp"
-        android:scrollbars="vertical"
+        android:layout_gravity="center"
         android:visibility="gone"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_app" />
+        tools:visibility="visible">
+
+        <Button
+            android:id="@+id/makeDebuggableButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/make_debuggable"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/appList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scrollbarSize="4dp"
+            android:scrollbars="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/makeDebuggableButton"
+            app:layout_constraintVertical_weight="1"
+            tools:listitem="@layout/item_app" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

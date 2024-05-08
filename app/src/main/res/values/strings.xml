@@ -19,4 +19,7 @@
     <string name="adb_communication_failure">Adb communication failure, please disconnect other adb connections(such as Android Studio) and try again</string>
     <string name="pairing">Pairing</string>
     <string name="please_enter_pairing_code">Please enter the pairing code you see</string>
+    <string name="failed_to_switch_uid">Failed to switch uid, please ensure root has been granted</string>
+    <string name="make_debuggable">make debuggable</string>
+    <string name="this_operation_will_reboot_the_system">This operation will reboot the system, continue?</string>
 </resources>

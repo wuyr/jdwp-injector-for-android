@@ -28,6 +28,7 @@ import com.wuyr.jdwp_injector_test.adapter.AppItem
 import com.wuyr.jdwp_injector_test.adapter.AppListAdapter
 import com.wuyr.jdwp_injector_test.databinding.ActivityMainBinding
 import com.wuyr.jdwp_injector_test.log.logE
+import java.io.File
 import java.net.SocketTimeoutException
 import java.util.concurrent.Executors
 import javax.net.ssl.SSLHandshakeException
@@ -54,6 +55,7 @@ class MainActivity(override val viewBindingClass: Class<ActivityMainBinding> = A
         binding.apply {
             connectButton.setOnClickListener { tryConnect() }
             performPairingButton.setOnClickListener { doPairing() }
+            makeDebuggableButton.setOnClickListener { makeDebuggable() }
         }
     }
 
@@ -95,16 +97,28 @@ class MainActivity(override val viewBindingClass: Class<ActivityMainBinding> = A
     private var triedConnectPort = HashSet<Int>()
     private var connected = false
 
+    private val AdbClient.magiskInstalled: Boolean
+        get() = sendShellCommand(System.getenv("PATH")?.split(File.pathSeparatorChar)
+            ?.joinToString(" || ") { "ls $it/magisk 2>/dev/null" } ?: "").split("\n").getOrNull(1)?.contains("/magisk") ?: false
+
+    private val AdbClient.deviceRooted: Boolean
+        get() = sendShellCommand(System.getenv("PATH")?.split(File.pathSeparatorChar)
+            ?.joinToString(" || ") { "ls $it/su 2>/dev/null" } ?: "").split("\n").getOrNull(1)?.contains("/su") ?: false
+
     private fun onConnectPortDetected(host: String, port: Int) {
         if (connected) return
         if (!triedConnectPort.add(port)) return
         handle.removeCallbacks(resolveTimeoutTask)
         handle.removeCallbacks(connectFailedTask)
         runCatching {
+            val deviceRooted: Boolean
+            val magiskInstalled: Boolean
             if (AdbClient.openShell(host, port).use {
-                    it.sendShellCommand(if (Build.VERSION.SDK_INT >= 34) "persist.debug.dalvik.vm.jdwp.enabled" else "getprop ro.debuggable")
+                    magiskInstalled = it.magiskInstalled
+                    deviceRooted = it.deviceRooted
+                    it.sendShellCommand(if (Build.VERSION.SDK_INT >= 34) "getprop persist.debug.dalvik.vm.jdwp.enabled" else "getprop ro.debuggable")
                 }.also { response ->
-                    val enabled = response.split("\r\n").filterNot { it.isEmpty() }.run { if (size > 1) this[1] else "" } == "1"
+                    val enabled = response.split("\n").filterNot { it.isEmpty() }.run { if (size > 1) this[1].trim() else "" } == "1"
                     globalDebuggable = if (Build.VERSION.SDK_INT >= 34) Build.TYPE == "eng" || (Build.TYPE == "userdebug" && enabled) else enabled
                 }.isNotEmpty()) {
                 connected = true
@@ -112,7 +126,13 @@ class MainActivity(override val viewBindingClass: Class<ActivityMainBinding> = A
                 stopPortResolver()
                 connectHost = host
                 connectPort = port
-                runOnUiThread { loadDebuggableAppList() }
+                runOnUiThread {
+                    // 必须拥有root权限，并且build type=userdebug或者安装了magisk才可以开启全局调试，如果是android14以下的，必须安装了magisk才可以
+                    if (!globalDebuggable && deviceRooted && (Build.TYPE == "userdebug" || magiskInstalled) && (Build.VERSION.SDK_INT >= 34 || magiskInstalled)) {
+                        binding.makeDebuggableButton.visibility = View.VISIBLE
+                    }
+                    loadDebuggableAppList()
+                }
             }
         }.onFailure {
             handle.removeCallbacks(connectFailedTask)
@@ -201,7 +221,7 @@ class MainActivity(override val viewBindingClass: Class<ActivityMainBinding> = A
     private fun loadDebuggableAppList() {
         binding.connectButton.visibility = View.GONE
         binding.wirelessPairingRoot.visibility = View.GONE
-        binding.appList.visibility = View.VISIBLE
+        binding.appListRoot.visibility = View.VISIBLE
         binding.appList.adapter = AppListAdapter(this).apply {
             adapter = this
             onOpenButtonClick = { item -> openApplication(item.packageName, item.activityClassName) }
@@ -228,6 +248,44 @@ class MainActivity(override val viewBindingClass: Class<ActivityMainBinding> = A
         }.sortedBy { it.appName }.toMutableList()
     }
 
+    private fun makeDebuggable() {
+        AlertDialog.Builder(this).setMessage(R.string.this_operation_will_reboot_the_system)
+            .setNegativeButton(android.R.string.cancel, null).setPositiveButton(android.R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+                threadPool.execute {
+                    runCatching {
+                        AdbClient.openShell(connectHost, connectPort).use { adb ->
+                            adb.sendShellCommand("su")
+                            if (adb.sendShellCommand("id").contains("uid=0(")) {
+                                if (Build.VERSION.SDK_INT >= 34) {
+                                    // android 14以上，原来的ro.debuggable已经没用，用的是新的判断条件
+                                    if (Build.TYPE == "userdebug") {
+                                        // build type为userdebug的（一般是自己编译的系统），直接修改persist.debug.dalvik.vm.jdwp.enabled属性为1即可
+                                        adb.sendShellCommand("setprop persist.debug.dalvik.vm.jdwp.enabled 1 && stop;start")
+                                    } else {
+                                        // build type为其他的（一般是手动刷magisk的手机），通过magisk resetprop来修改build type为eng即可
+                                        // （或者修改为userdebug然后persist.debug.dalvik.vm.jdwp.enabled属性设为1）
+                                        adb.sendShellCommand("magisk resetprop ro.build.type \"eng\" && stop;start")
+                                    }
+                                } else {
+                                    // android 14以下的，利用magisk修改一下ro.debuggable属性就行
+                                    adb.sendShellCommand("magisk resetprop ro.debuggable 1 && stop;start")
+                                }
+                            } else {
+                                runOnUiThread {
+                                    AlertDialog.Builder(this).setMessage(R.string.failed_to_switch_uid).setPositiveButton(android.R.string.ok, null).show()
+                                }
+                            }
+                        }
+                    }.onFailure {
+                        runOnUiThread {
+                            AlertDialog.Builder(this).setMessage(it.stackTraceToString()).setPositiveButton(android.R.string.ok, null).show()
+                        }
+                    }
+                }
+            }.show()
+    }
+
     private fun openApplication(packageName: String, activityClassName: String) {
         threadPool.execute {
             runCatching {
@@ -248,15 +306,13 @@ class MainActivity(override val viewBindingClass: Class<ActivityMainBinding> = A
             runCatching {
                 JdwpInjector.start(connectHost, connectPort, packageName, packageName, packageResourcePath, Drug::class.java.name, injectMethodName)
             }.onFailure {
+                it.stackTraceToString().logE()
                 val message = getString(
                     when (it) {
                         is ProcessNotFoundException -> R.string.target_process_not_found_please_open_it_first
                         is SocketTimeoutException -> R.string.time_out_to_connect_to_target_process
                         is AdbCommunicationException -> R.string.adb_communication_failure
-                        else -> {
-                            it.stackTraceToString().logE()
-                            R.string.unknown_error
-                        }
+                        else -> R.string.unknown_error
                     }
                 )
                 runOnUiThread {
