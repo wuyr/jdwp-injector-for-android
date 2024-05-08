@@ -7,7 +7,8 @@
 
 <br/>
 
-### 姊妹篇：[agent-injector-for-android](https://github.com/wuyr/agent-injector-for-android)（直接通过attach agent来实现对debuggable app(release app需root)的动态代码注入）
+### 姊妹篇：
+[agent-injector-for-android](https://github.com/wuyr/agent-injector-for-android)（直接通过attach agent来实现对debuggable app(release app需root)的动态代码注入）
 
 <br/>
 
@@ -43,6 +44,7 @@ fun showDialog() {
 
 
 >注：如果要注入release版的app，必须开启全局调试(`ro.debuggable=1`)或者当前系统类型是userdebug或eng(`ro.build.type=userdebug|eng`)才可以。
+> 
 > **android 14之后改了判定机制，原来的`ro.debuggable`属性已经没用了，新的全局调试条件改成了`ro.build.type=eng`或者`ro.build.type=userdebug`并且`persist.debug.dalvik.vm.jdwp.enabled=1`**
 
 <br/>
