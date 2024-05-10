@@ -36,4 +36,4 @@ class AppListAdapter(context: Context, items: MutableList<AppItem> = mutableList
     }
 }
 
-data class AppItem(val icon: Drawable, val appName: String, val packageName: String, val activityClassName: String)
+data class AppItem(val icon: Drawable, val appName: String, val packageName: String, val activityClassName: String, val debuggable: Boolean, val isSystemApp: Boolean)

@@ -184,7 +184,7 @@ class AdbClient private constructor(host: String, port: Int) : Closeable {
 
     fun sendShellCommand(command: String, waitForResponse: Boolean = true) = StringBuilder().apply {
         append(String(sendMessage(CMD_WRITE, *command.toByteArray(), 13, closeWhenFailed = true) ?: return@apply))
-        while (waitForResponse && (!endsWith(" $ ") || inputStream.available() > 0)) {
+        while (waitForResponse && ((!endsWith(" $ ") && !endsWith(" # ")) || inputStream.available() > 0)) {
             append(String(waitForResponse().third))
             sendOKMessage()
         }

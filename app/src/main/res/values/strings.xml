@@ -14,12 +14,14 @@
     <string name="show_toast">show toast</string>
     <string name="paring_code">paring code</string>
     <string name="target_process_not_found_please_open_it_first">Target process not found, please open it first</string>
-    <string name="unknown_error">Unknown error</string>
+    <string name="unknown_error">An unknown error occurred:\n%s</string>
     <string name="time_out_to_connect_to_target_process">Time out to connect to target process, please disconnect other adb connections(such as Android Studio) and try again</string>
     <string name="adb_communication_failure">Adb communication failure, please disconnect other adb connections(such as Android Studio) and try again</string>
     <string name="pairing">Pairing</string>
     <string name="please_enter_pairing_code">Please enter the pairing code you see</string>
-    <string name="failed_to_switch_uid">Failed to switch uid, please ensure root has been granted</string>
+    <string name="failed_to_switch_uid">Failed to switch uid, please ensure root has been granted, or target app is debuggable</string>
+    <string name="failed_to_switch_uid2">Failed to switch uid, please ensure root has been granted</string>
+    <string name="check_if_your_device_is_rooted">The system apps and release apk require root privileges to continue, check if your device is rooted</string>
     <string name="make_debuggable">make debuggable</string>
     <string name="this_operation_will_reboot_the_system">This operation will reboot the system, continue?</string>
 </resources>
